@@ -8,7 +8,7 @@ interface IClassementItem {
     id: string;
     nom: string;
     temps: number;
-    duration: string;
+    duration: number;
 }
 
 
@@ -16,7 +16,7 @@ interface IClassementItem {
 export default function Classement () {
 
     const [classement, setClassement] = useState<IClassementItem[]>([]);
-    const [timeFilter, setTimeFilter] = useState<string>('');
+    const [timeFilter, setTimeFilter] = useState<number>(0);
 
     useEffect(() => {
 
@@ -38,7 +38,7 @@ export default function Classement () {
     
     }, [])
 
-    const filterByDuration = (duration: string) => {
+    const filterByDuration = (duration: number) => {
         setTimeFilter(duration);
         console.log(timeFilter)
     }
@@ -52,22 +52,22 @@ export default function Classement () {
                 </div>
                 <div className="flex gap-12">
 
-                    <button className={timeFilter === "" ? "bg-green-800 px-4 py-1 rounded" : "bg-red-800 px-4 py-1 rounded"} onClick={() => filterByDuration('')}>All</button>
-                    <button className={timeFilter === "1000" ? "bg-green-800 px-4 py-1 rounded" : "bg-red-800 px-4 py-1 rounded"} onClick={() => filterByDuration('1000')}>10s</button>
-                    <button className={timeFilter === "2000" ? "bg-green-800 px-4 py-1 rounded" : "bg-red-800 px-4 py-1 rounded"} onClick={() => filterByDuration('2000')}>20s</button>
-                    <button className={timeFilter === "3000" ? "bg-green-800 px-4 py-1 rounded" : "bg-red-800 px-4 py-1 rounded"} onClick={() => filterByDuration('3000')}>30s</button>
-                    <button className={timeFilter === "6000" ? "bg-green-800 px-4 py-1 rounded" : "bg-red-800 px-4 py-1 rounded"} onClick={() => filterByDuration('6000')}>1min</button>
+                    <button className={timeFilter === 0 ? "bg-green-800 px-4 py-1 rounded" : "bg-red-800 px-4 py-1 rounded"} onClick={() => filterByDuration(0)}>All</button>
+                    <button className={timeFilter === 10000 ? "bg-green-800 px-4 py-1 rounded" : "bg-red-800 px-4 py-1 rounded"} onClick={() => filterByDuration(10000)}>10s</button>
+                    <button className={timeFilter === 20000 ? "bg-green-800 px-4 py-1 rounded" : "bg-red-800 px-4 py-1 rounded"} onClick={() => filterByDuration(20000)}>20s</button>
+                    <button className={timeFilter === 30000 ? "bg-green-800 px-4 py-1 rounded" : "bg-red-800 px-4 py-1 rounded"} onClick={() => filterByDuration(30000)}>30s</button>
+                    <button className={timeFilter === 60000 ? "bg-green-800 px-4 py-1 rounded" : "bg-red-800 px-4 py-1 rounded"} onClick={() => filterByDuration(60000)}>1min</button>
                 </div>
             </div>
             <div>
                 {
                     classement.map((item: IClassementItem, index: number) => {
-                        if (timeFilter === '' || item.duration === timeFilter) {
+                        if (timeFilter === 0 || item.duration === timeFilter) {
                             return (
-                                <div key={item.id} className="flex justify-between gap-12">
+                                <div key={item.id} className="flex justify-between gap-12 items-center">
                                     <span>{index + 1}</span>
                                     <span>{item.nom}</span>
-                                    <span>{item.temps}</span>
+                                    <span className="text-center">{item.temps}</span>
                                     <span>{item.duration}ms</span>
                                 </div>
                             );
